@@ -1,7 +1,5 @@
-doctype html
-html(lang="en")
-  head
-    title My Website
-  body
-    h1 Hello, World!
-    p This is a Pug template.
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}

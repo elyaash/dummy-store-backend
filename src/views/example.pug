@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  a(href='//google.com') Google ||
+  a(href='//amazon.com') Amazon ||
+  a(href='//apple.com') Apple
+
+  div(class='div-class', (click)='play()')
+  div(class='div-class' '(click)'='play()')
+
+  input(type='checkbox' checked)
+  |
+  |
+  input(type='checkbox' checked=true)
+  |
+  |
+  input(type='checkbox' checked=false)
+  |
+  |
+  input(type='checkbox' checked=true.toString())
+
+  // Single attribute
+  a(href='//educative.io') Educative
+
+  // Multiple attributes separated by a comma
+  a(href='//educative.io', target='_blank')
+
+  // Attributes spanning over multiple lines
+  img(
+    alt='Edpresso logo'
+    src='/images/logo.jpg'
+    width='50'
+    height='50'
+    style="border:6px solid black;float:left;"
+  )

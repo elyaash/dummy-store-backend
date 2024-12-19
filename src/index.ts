@@ -5,6 +5,7 @@ import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import booksRouter from './routes/books';
 import coursesRouter from './routes/courses';
+import playGroundRouter from './routes/playground';
 
 const app = express();
 const port = 3000;
@@ -13,10 +14,14 @@ const port = 3000;
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+//
+app.use(express.static(path.join(__dirname, 'public'))); 
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use("/courses",coursesRouter);
 app.use("/books",booksRouter);
+app.use('/playground',playGroundRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello from TypeScript Express!');
