@@ -1,23 +1,66 @@
 import express from 'express';
 import path from 'path';
+import helmet from 'helmet';
+import session from 'express-session';
+import { RedisStore } from 'connect-redis';
+
+import redisClient from './shared/RedisClient'
 
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import booksRouter from './routes/books';
 import coursesRouter from './routes/courses';
 import playGroundRouter from './routes/playground';
+import storeRouter from './routes/redisOpts';
 
+
+const cookieParser = require("cookie-parser");
+const rateLimit = require('express-rate-limit');
 const app = express();
 const port = 3000;
+
+// Create a Redis session store
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+})
 
 // Set the view engine to 'pug'
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-//
+// Configure session middleware
+app.use(session({
+  store: redisStore,
+  secret: 'your-session-secret', // Replace with your session secret
+  resave: false,                 // Prevents saving session if unmodified
+  saveUninitialized: false,      // Prevents saving empty sessions
+  cookie: {
+    secure: false,               // Set true if using HTTPS
+    httpOnly: true,              // Prevents JavaScript access to cookies
+    maxAge: 1000 * 60 * 10,      // Session expiration in milliseconds (10 minutes)
+  },
+}));
+
+app.use(cookieParser());
+app.use(helmet());
+
+// Create a rate limiter middleware
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.'
+});
+
+// Apply the rate limiter to the specific route
+app.get('/api/login', limiter, (req, res) => {
+  // Your login logic here
+  res.send("API");
+});
 app.use(express.static(path.join(__dirname, 'public'))); 
 
 app.use('/', indexRouter);
+app.use('/session', storeRouter);
 app.use('/users', usersRouter);
 app.use("/courses",coursesRouter);
 app.use("/books",booksRouter);
