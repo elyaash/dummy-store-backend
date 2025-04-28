@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 
-let router = express.Router();
+const router = express.Router();
 
 router.get("/log/:message?", (req: Request, res: Response) => {
   if (req.params.message) console.log(req.params.message);
