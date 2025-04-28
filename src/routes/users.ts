@@ -16,6 +16,7 @@ router.get('/posts/:userId?',(req: Request,res: Response) => {
   }
 })
 router.get('/:year/:month',(req: Request,res:Response) => {
+  res.set('Content-Type', 'text/plain');
   res.send("Request Param <br>Year:"+req.params.year+"<br>Month:"+req.params.month);
 })
 
