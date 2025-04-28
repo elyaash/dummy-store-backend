@@ -4,10 +4,12 @@ let router = express.Router();
 
 router.get("/log/:message?", (req: Request, res: Response) => {
   if (req.params.message) console.log(req.params.message);
+  res.set('Content-Type', 'text/plain');
   res.status(200).send("Logged the message:" + req.params.message);
 });
 router.get("/error/:message?", (req: Request, res: Response) => {
   if (req.params.message) console.error(req.params.message);
+  res.set('Content-Type', 'text/plain');
   res.status(200).send("Logged the error message:" + req.params.message);
 });
 
