@@ -1,5 +1,5 @@
 import express,{ Request, Response } from 'express';
-let router = express.Router();
+const router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req: Request, res: Response, next) {
@@ -8,7 +8,7 @@ router.get('/', function(req: Request, res: Response, next) {
 
 router.get('/posts/:userId?',(req: Request,res: Response) => {
   const userId = req.params.userId;
-
+  res.set('Content-Type', 'text/plain');
   if (userId) {
     res.send(`User ID: ${userId}`);
   } else {
