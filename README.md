@@ -1,3 +1,3 @@
 # dummy-store-backend
 
-## Changing to trigger the commig
+## Changing to trigger the harness pipeline
