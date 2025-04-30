@@ -8,6 +8,7 @@ import usersRouter from "./routes/users";
 import booksRouter from "./routes/books";
 import coursesRouter from "./routes/courses";
 import playGroundRouter from "./routes/playground";
+import healthRouter from "./routes/health";
 
 const cookieParser = require("cookie-parser");
 const rateLimit = require("express-rate-limit");
@@ -61,7 +62,7 @@ app.use("/users", usersRouter);
 app.use("/courses", coursesRouter);
 app.use("/books", booksRouter);
 app.use("/playground", playGroundRouter);
-
+app.use("/health", healthRouter);
 app.get("/", (req, res) => {
   res.send("Hello from TypeScript Express!");
 });
